@@ -1,4 +1,4 @@
-# helm-py
+# helm-binary-py
 
 A python wrapper to provide a pip-installable [helm](https://github.com/helm/helm) binary.
 

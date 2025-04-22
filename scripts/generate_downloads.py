@@ -17,8 +17,11 @@ URL_PATTERNS = {
     'linux-riscv64': 'https://get.helm.sh/helm-%s-linux-riscv64.tar.gz',
     'linux-386': 'https://get.helm.sh/helm-%s-linux-386.tar.gz',
     'linux-amd64': 'https://get.helm.sh/helm-%s-linux-amd64.tar.gz',
+    'linux-ppc64le': 'https://get.helm.sh/helm-%s-linux-ppc64le.tar.gz',
+    'linux-s390x': 'https://get.helm.sh/helm-%s-linux-s390x.tar.gz',
     'darwin-arm64': 'https://get.helm.sh/helm-%s-darwin-arm64.tar.gz',
     'darwin-amd64': 'https://get.helm.sh/helm-%s-darwin-amd64.tar.gz',
+    'windows-arm64': 'https://get.helm.sh/helm-%s-windows-arm64.zip',
     'windows-amd64': 'https://get.helm.sh/helm-%s-windows-amd64.zip',
 }
 
@@ -108,6 +111,21 @@ def main(argv: Sequence[str] | None = sys.argv[1:]) -> int:
         extract_path = linux-amd64/helm
         [helm]
         group = helm-binary
+        marker = sys_platform == "linux" and platform_machine == "ppc64"
+        marker = sys_platform == "linux" and platform_machine == "ppc64le"
+        url = {data["linux-ppc64le"]["url"]}
+        sha256 = {data["linux-ppc64le"]["sha256"]}
+        extract = tar
+        extract_path = linux-ppc64le/helm
+        [helm]
+        group = helm-binary
+        marker = sys_platform == "linux" and platform_machine == "s390x"
+        url = {data["linux-s390x"]["url"]}
+        sha256 = {data["linux-s390x"]["sha256"]}
+        extract = tar
+        extract_path = linux-s390x/helm
+        [helm]
+        group = helm-binary
         marker = sys_platform == "darwin" and platform_machine == "arm64"
         url = {data["darwin-arm64"]["url"]}
         sha256 = {data["darwin-arm64"]["sha256"]}
@@ -123,12 +141,19 @@ def main(argv: Sequence[str] | None = sys.argv[1:]) -> int:
         [helm.exe]
         group = helm-binary
         marker = sys_platform == "win32" and platform_machine == "AMD64"
-        marker = sys_platform == "win32" and platform_machine == "ARM64"
         marker = sys_platform == "cygwin" and platform_machine == "x86_64"
         url = {data["windows-amd64"]["url"]}
         sha256 = {data["windows-amd64"]["sha256"]}
         extract = zip
         extract_path = windows-amd64/helm.exe
+        [helm.exe]
+        group = helm-binary
+        marker = sys_platform == "win32" and platform_machine == "ARM64"
+        marker = sys_platform == "cygwin" and platform_machine == "aarch64"
+        url = {data["windows-arm64"]["url"]}
+        sha256 = {data["windows-arm64"]["sha256"]}
+        extract = zip
+        extract_path = windows-arm64/helm.exe
         """,
     ).strip()
 

@@ -8,7 +8,7 @@ helm binary for your particular platform.
 ### installation
 
 ```bash
-pip install helm-py
+pip install helm-binary
 ```
 
 ### usage
